@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: kersvers/s3-sync-with-cloudfront-invalidation@v1.0.0
+    - uses: exatasmente/aws-s3-sync-with-cloudfront-cache-invalidation-invalidation-paths-option@v0.0.1
       with:
         args: --acl public-read --follow-symlinks --delete
       env:

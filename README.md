@@ -42,7 +42,7 @@ jobs:
         AWS_REGION: 'eu-west-1'   # optional: defaults to us-east-1
         SOURCE_DIR: 'public'      # optional: defaults to entire repository
         DEST_DIR: 'subdirectory'      # optional: defaults to the root of the bucket
-        INVALIDATION_PATHS = '/subdirectory/*'
+        INVALIDATION_PATHS: '/subdirectory/*'
 ```
 
 

@@ -27,10 +27,15 @@ if [ -z "$AWS_REGION" ]; then
   AWS_REGION="us-east-1"
 fi
 
+if [ -z "$INVALIDATION_PATHS" ]; then
+  INVALIDATION_PATHS="/*"
+fi
+
 # Override default AWS endpoint if user sets AWS_S3_ENDPOINT.
 if [ -n "$AWS_S3_ENDPOINT" ]; then
   ENDPOINT_APPEND="--endpoint-url $AWS_S3_ENDPOINT"
 fi
+
 
 # Create a dedicated profile for this action to avoid conflicts
 # with past/future actions.
@@ -49,7 +54,7 @@ sh -c "aws s3 sync ${SOURCE_DIR:-.} s3://${AWS_S3_BUCKET}/${DEST_DIR} \
               --no-progress \
               ${ENDPOINT_APPEND} $*"
 
-sh -c "aws cloudfront create-invalidation --distribution-id ${DISTRIBUTION_ID} --paths \"/*\" --profile s3-sync-action"
+sh -c "aws cloudfront create-invalidation --distribution-id ${DISTRIBUTION_ID} --paths \"{INVALIDATION_PATHS}\" --profile s3-sync-action"
 
 # Clear out credentials after we're done.
 # We need to re-run `aws configure` with bogus input instead of
